@@ -10,10 +10,34 @@ namespace Core.Specifications
             AddInclude(x => x.ProductType);
         }
 
-        public ProductWithBrandsAndTypesSpecifications()
+        public ProductWithBrandsAndTypesSpecifications(ProductSpecParams productParams) : base(x =>
+                   (string.IsNullOrEmpty(productParams.Search) || x.Name.ToLower().Contains(productParams.Search)) &&
+                   (!productParams.TypeId.HasValue || x.ProductTypeId == productParams.TypeId) &&
+                   (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId))
         {
+
             AddInclude(x => x.ProductType);
             AddInclude(x => x.ProductBrand);
+            AddOrderBy(x => x.Name);
+            ApplyPaging(productParams.pageSize * (productParams.pageIndex - 1), productParams.pageSize);
+
+
+            if (!string.IsNullOrEmpty(productParams.Sort))
+            {
+                switch (productParams.Sort)
+                {
+                    case "priceAsc":
+                        AddOrderBy(x => x.Price);
+                        break;
+                    case "priceDesc":
+                        AddOrderByDescending(x => x.Price);
+                        break;
+                }
+            }
+
         }
     }
 }
+
+
+
