@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { ShopService } from './../shop.service';
 import { IProduct } from './../../shared/models/product';
 import { Component, OnInit } from '@angular/core';
@@ -23,5 +24,6 @@ export class ProductDetailsComponent implements OnInit {
       this.product = product;
     },err=>console.log(err))
   }
+ 
 
 }
