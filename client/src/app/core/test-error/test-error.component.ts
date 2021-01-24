@@ -9,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestErrorComponent implements OnInit {
 baseUrl = environment.apiUrl;
+validationErrors:any;
   constructor(private http:HttpClient) { }
 
   ngOnInit() {
   }
 
   get500Error(){
-    this.http.get(this.baseUrl+'buggy/servererror').subscribe(response => console.log(response),err=>console.log(err));
+    this.http.get(this.baseUrl+'buggy/servererror').subscribe(
+      response => console.log(response)
+      ,err=>console.log(err));
   }
 
   get404Error(){
@@ -27,7 +30,13 @@ baseUrl = environment.apiUrl;
   }
 
   get400ValidationError(){
-    this.http.get(this.baseUrl+'products/two').subscribe(response => console.log(response),err=>console.log(err));
+    this.http.get(this.baseUrl+'products/two').subscribe(response => console.log(response),
+    err=>
+    {
+      console.log(err);
+      this.validationErrors = err.errors;
+
+    });
   }
 
 
