@@ -28,9 +28,8 @@ namespace API.Controllers
 
         }
 
-
-        [HttpGet]
         [Authorize]
+        [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
 
@@ -118,8 +117,6 @@ namespace API.Controllers
                 Token = _tokenService.CreateToken(user)
             };
 
-
         }
-
     }
 }
