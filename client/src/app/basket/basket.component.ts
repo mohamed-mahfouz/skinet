@@ -11,22 +11,22 @@ import { IBasket } from '../shared/models/basket';
 })
 export class BasketComponent implements OnInit {
 
-  basket$:Observable<IBasket>;
-  constructor(private basketService:BasketService) { }
+  basket$: Observable<IBasket>;
+  constructor(private basketService: BasketService) { }
 
   ngOnInit() {
     this.basket$ = this.basketService.basket$;
   }
 
-  removeBasketItem(item:IBasketItem){
+  removeBasketItem(item: IBasketItem) {
     this.basketService.removeItemFromBasket(item);
   }
 
- incrementItemQuantity(item:IBasketItem){
+ incrementItemQuantity(item: IBasketItem) {
   this.basketService.incrementItemQuantity(item);
  }
 
- decrementItemQuantity(item:IBasketItem){
+ decrementItemQuantity(item: IBasketItem) {
   this.basketService.decrementItemQuantity(item);
  }
 

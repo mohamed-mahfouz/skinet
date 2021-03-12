@@ -9,13 +9,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProductItemComponent implements OnInit {
 
-  @Input() product:IProduct;
-  constructor(private basketService:BasketService) { }
+  @Input() product: IProduct;
+  constructor(private basketService: BasketService) { }
 
   ngOnInit() {
   }
 
-  addItemToBasket(){
+  addItemToBasket() {
     this.basketService.addItemToBasket(this.product);
   }
 }
