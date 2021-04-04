@@ -1,6 +1,9 @@
+import { Observable } from 'rxjs';
+import { BasketService } from 'src/app/basket/basket.service';
 import { AccountService } from './../account/account.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { IBasketTotals } from '../shared/models/basket';
 
 @Component({
   selector: 'app-checkout',
@@ -9,11 +12,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
   checkoutForm: FormGroup;
-  constructor(private fb: FormBuilder, private accountService: AccountService) { }
+  basketTotlas$: Observable<IBasketTotals>;
+
+  constructor(private fb: FormBuilder, private accountService: AccountService, private basketService: BasketService) { }
 
   ngOnInit() {
     this.createCheckoutForm();
     this.getAddressFormValues();
+    this.getDeliveryMethodValue();
+    this.basketTotlas$ = this.basketService.basketTotal$;
   }
 
   createCheckoutForm() {
@@ -41,5 +48,12 @@ export class CheckoutComponent implements OnInit {
         this.checkoutForm.get('addressForm').patchValue(address);
       }
     }, error => console.log(error));
+  }
+
+  getDeliveryMethodValue() {
+    const basket = this.basketService.getCurrentBasketValue();
+    if (basket.deliveryMethodId != null) {
+      this.checkoutForm.get('deliveryForm').get('deliveryMethod').patchValue(basket.deliveryMethodId.toString());
+    }
   }
 }

@@ -40,7 +40,7 @@ namespace API
                 return ConnectionMultiplexer.Connect(configuration);
             });
 
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof( MappingProfile));
 
             //my custom extension for clean startup
             services.AddApplicationServices();
